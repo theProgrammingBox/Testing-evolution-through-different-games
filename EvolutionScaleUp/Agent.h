@@ -13,6 +13,7 @@ public:
 	~Agent();
 	uint32_t Forward() const;
 	void Mutate(Agent* parentAgent);
+	void PrintDistribution() const;
 };
 
 Agent::Agent()
@@ -70,4 +71,12 @@ void Agent::Mutate(Agent* parentAgent)
 		gpuBiasTensor, CUDA_R_16F, 1,
 		CUDA_R_32F
 	);
+}
+
+void Agent::PrintDistribution() const
+{
+	cudaMemcpy(GLOBAL::cpuSoftmaxTensor, gpuSoftmaxTensor, GLOBAL::ACTION_BYTES, cudaMemcpyDeviceToHost);
+	for (uint32_t i = 0; i < GLOBAL::ACTIONS; i++)
+		printf("%f ", __half2float(GLOBAL::cpuSoftmaxTensor[i]));
+	printf("\n");
 }

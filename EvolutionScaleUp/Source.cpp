@@ -25,21 +25,26 @@ int main()
 
 		// sort agents by score
 		std::sort(agents, agents + GLOBAL::AGENTS, [](Agent* a, Agent* b) { return a->score > b->score; });
-
+		
 		for (uint32_t i = GLOBAL::TOP_AGENTS; i < GLOBAL::AGENTS; i++)
 		{
 			uint32_t parent = GLOBAL::randomEngine() % GLOBAL::TOP_AGENTS;
 			agents[i]->Mutate(agents[parent]);
 		}
 		
-		float averageScore = 0.0f;
-		for (uint32_t i = 0; i < GLOBAL::AGENTS; i++)
+		float averageTopScore = 0.0f;
+		for (uint32_t i = GLOBAL::TOP_AGENTS; i--;)
 		{
-			averageScore += agents[i]->score;
-			agents[i]->score = 0.0f;
+			averageTopScore += agents[i]->score;
 		}
-		averageScore /= GLOBAL::AGENTS;
-		printf("Generation %d: average score = %f\n", generation, averageScore);
+		averageTopScore /= GLOBAL::TOP_AGENTS;
+		printf("Generation %d: average top score = %f\n", generation, averageTopScore);
+		
+		// print the probability distribution of the top agent
+		agents[0]->PrintDistribution();
+		
+		for (uint32_t i = 0; i < GLOBAL::AGENTS; i++)
+			agents[i]->score = 0;
 	}
 
 	GLOBAL::Destroy();
