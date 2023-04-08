@@ -61,7 +61,7 @@ void Agent::Mutate(Agent* parentAgent)
 {
 	cudaMemcpy(gpuBiasTensor, parentAgent->gpuBiasTensor, GLOBAL::ACTION_BYTES, cudaMemcpyDeviceToDevice);
 
-	CurandGenerateUniformF16(GLOBAL::curandGenerator, GLOBAL::gpuBiasMutationTensor, GLOBAL::ACTIONS, -0.1f, 0.1f);
+	CurandGenerateUniformF16(GLOBAL::curandGenerator, GLOBAL::gpuBiasMutationTensor, GLOBAL::ACTIONS, -0.01f, 0.01f);
 
 	cublasAxpyEx
 	(

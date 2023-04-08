@@ -49,7 +49,8 @@ namespace GLOBAL
 	std::mt19937 randomEngine(randomDevice());
 	std::uniform_real_distribution<float> randomFloat(0.0f, 1.0f);
 
-	const uint32_t ACTIONS = 3;
+	//const uint32_t ACTIONS = 3;	//tic tac toe
+	const uint32_t ACTIONS = 2;		// prisoner's dilemma
 	const uint32_t ACTION_BYTES = ACTIONS << 1;
 	const uint32_t SCORES = ACTIONS * ACTIONS;
 	const uint32_t GENERATIONS = 1000;
@@ -61,12 +62,19 @@ namespace GLOBAL
 	const float TOP_PERCENT = 0.1f;
 	const uint32_t TOP_AGENTS = AGENTS * TOP_PERCENT;
 	
-	// tic tac toe
+	//// tic tac toe
+	//const float scores[SCORES] =
+	//{
+	//	0.0f, -1.0f, 1.0f,
+	//	1.0f, 0.0f, -1.0f,
+	//	-1.0f, 1.0f, 0.0f
+	//};
+
+	// prisoner's dilemma
 	const float scores[SCORES] =
 	{
-		0.0f, -1.0f, 1.0f,
-		1.0f, 0.0f, -1.0f,
-		-1.0f, 1.0f, 0.0f
+		-6.0f, 0.0f,
+		-10.0f, -1.0f
 	};
 
 	__half* cpuSoftmaxTensor;
